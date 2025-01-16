@@ -1,29 +1,22 @@
 const express = require('express');
 const path = require('path');
-const blogRouter = require('./routes/blog');
 const { sequelize } = require('./models');
+const blogRoutes = require('./routes/blog');
+
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
-app.get('/', (req, res) => {
-    res.render('index', { title: 'Home' });
-});
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/create', (req, res) => {
-    res.render('create', { title: 'Create Post' });
-});
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', blogRouter);
-
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-});
+app.use('/', blogRoutes);
 
 sequelize.sync().then(() => {
-    app.listen(port, () => {
-        console.log(`Server is running on http://localhost:${port}`);
-    });
+  app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+  });
 });
