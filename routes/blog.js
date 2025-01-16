@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const { BlogPost } = require('../models');
+
+router.post('/create', async (req, res) => {
+    await BlogPost.create(req.body);
+    res.redirect('/');
+});
 
 router.get('/', (req, res) => {
     res.render('index', { title: 'Home' });
-});
-
-router.get('/create', (req, res) => {
-    res.render('create', { title: 'Create Post' });
 });
 
 module.exports = router;
