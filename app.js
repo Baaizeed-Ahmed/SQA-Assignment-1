@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const blogRouter = require('./routes/blog');
 const app = express();
 const port = 3000;
 
@@ -13,6 +14,8 @@ app.get('/', (req, res) => {
 app.get('/create', (req, res) => {
     res.render('create', { title: 'Create Post' });
 });
+
+app.use('/', blogRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
