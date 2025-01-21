@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const { sequelize } = require('./models');
 const blogRoutes = require('./routes/blog');
+const commentRoutes = require('./routes/comments');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,7 +16,8 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', blogRoutes);
+app.use('/blog', blogRoutes);
+app.use('/comments', commentRoutes);
 
 sequelize.sync()
   .then(() => {
