@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { BlogPost } = require('../models/index');
+const { BlogPost } = require('../models');
 const Sequelize = require('sequelize'); 
 
-router.get('/home', async (req, res) => {
+router.get('/', async (req, res) => {
   const { search, sortBy } = req.query;
 
   let where = {};
@@ -25,13 +25,12 @@ router.get('/home', async (req, res) => {
 
   try {
     const posts = await BlogPost.findAll({ where, order });
-    res.render('index', { title: 'Blog Posts', posts, search, sortBy }); // Pass all required variables
+    res.render('index', { title: 'Blog Posts', posts, search, sortBy }); 
   } catch (error) {
     console.error('Error fetching posts:', error);
     res.status(500).send('An error occurred while fetching posts.'); 
   }
 });
-
 
 router.get('/create', (req, res) => {
   res.render('create', { title: 'Create Post' });
@@ -39,9 +38,11 @@ router.get('/create', (req, res) => {
 
 router.post('/create', async (req, res) => {
   try {
-    await BlogPost.create(blogPostData);
+    await BlogPost.create(req.body);
     res.redirect('/');
   } catch (error) {
+    console.error('Error creating post:', error);
+    res.status(500).send('An error occurred while creating the post.');
     console.error('Error creating post:', error);
     res.status(500).send('An error occurred while creating the post.');
   }
@@ -58,10 +59,30 @@ router.get('/post/:id', async (req, res) => {
   } catch (error) {
     console.error('Error fetching post:', error);
     res.status(500).send('An error occurred while fetching the post.');
+  try {
+    const post = await BlogPost.findByPk(req.params.id);
+    if (post) {
+      res.render('post', { title: post.title, post });
+    } else {
+      res.status(404).send('Post not found');
+    }
+  } catch (error) {
+    console.error('Error fetching post:', error);
+    res.status(500).send('An error occurred while fetching the post.');
   }
 });
 
 router.get('/edit/:id', async (req, res) => {
+  try {
+    const post = await BlogPost.findByPk(req.params.id);
+    if (post) {
+      res.render('edit', { title: 'Edit Post', post });
+    } else {
+      res.status(404).send('Post not found');
+    }
+  } catch (error) {
+    console.error('Error fetching post:', error);
+    res.status(500).send('An error occurred while fetching the post.');
   try {
     const post = await BlogPost.findByPk(req.params.id);
     if (post) {
@@ -87,30 +108,33 @@ router.post('/edit/:id', async (req, res) => {
   } catch (error) {
     console.error('Error updating post:', error);
     res.status(500).send('An error occurred while updating the post.');
+  try {
+    const post = await BlogPost.findByPk(req.params.id);
+    if (post) {
+      await post.update(req.body);
+      res.redirect(`/post/${post.id}`);
+    } else {
+      res.status(404).send('Post not found');
+    }
+  } catch (error) {
+    console.error('Error updating post:', error);
+    res.status(500).send('An error occurred while updating the post.');
   }
 });
 
 router.post('/delete/:id', async (req, res) => {
-  const post = await BlogPost.findByPk(req.params.id);
-  if (post) {
-    await post.destroy();
-    res.redirect('/');
-  } else {
-    res.status(404).send('Post not found');
+  try {
+    const post = await BlogPost.findByPk(req.params.id);
+    if (post) {
+      await post.destroy();
+      res.redirect('/');
+    } else {
+      res.status(404).send('Post not found');
+    }
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    res.status(500).send('An error occurred while deleting the post.');
   }
-});
-
-router.get('/stats', async (req, res) => {
-  const posts = await BlogPost.findAll();
-  const lengths = posts.map(post => post.title.length + post.content.length);
-  const stats = {
-    average_length: lengths.reduce((a, b) => a + b, 0) / lengths.length,
-    median_length: lengths.sort((a, b) => a - b)[Math.floor(lengths.length / 2)],
-    max_length: Math.max(...lengths),
-    min_length: Math.min(...lengths),
-    total_length: lengths.reduce((a, b) => a + b, 0)
-  };
-  res.render('stats', { title: 'Post Statistics', ...stats });
 });
 
 module.exports = router;

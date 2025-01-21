@@ -3,14 +3,13 @@ extends layout
 block content
   h1 Blog Posts
 
-  form(action="/home" method="GET")
-    input(type="text" name="search" value=search placeholder="Search posts")
+  form(method="GET")
+    input(type="text", name="search", placeholder="Search posts")
     select(name="sortBy")
-      option(value="newest", selected=(sortBy === 'newest')) Newest
+      option(value="", selected=(sortBy === '')) Newest
       option(value="oldest", selected=(sortBy === 'oldest')) Oldest
       option(value="alphabetical", selected=(sortBy === 'alphabetical')) Alphabetical
     button(type="submit") Search
-
   ul
     if posts.length
       each post in posts
