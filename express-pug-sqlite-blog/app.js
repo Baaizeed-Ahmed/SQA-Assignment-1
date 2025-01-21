@@ -2,9 +2,8 @@ const express = require('express');
 const path = require('path');
 const session = require('express-session');
 const { sequelize } = require('./models');
-const { BlogPost } = require('./models/index')
-const blogRoutes = require('./routes/blog');
-const userRoutes = require('./routes/user');
+const blogRoutes = require('./routes/blogRoutes');
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -15,20 +14,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', blogRoutes);
+app.use('/', blogRoutes); 
 
-// Handle 404 (Not Found) errors
-app.use((req, res) => {
-  res.status(404).render('404', { title: 'Page Not Found' });
-});
-
-// Handle 500 (Internal Server) errors
-app.use((err, req, res, next) => {
-  console.error(err); // Log the error for debugging purposes
-  res.status(500).render('500', { title: 'Internal Server Error' });
-});
-
-sequelize.sync({ force: false }) // Use force: false in production environments
+sequelize.sync({ force: false }) 
   .then(() => {
     app.listen(port, () => {
       console.log(`Server is running on http://localhost:${port}`);
