@@ -1,8 +1,19 @@
 extends layout
 
 block content
-    form(action="/create", method="POST")
-        input(type="text", name="title", placeholder="Title", required)
-        input(type="text", name="author", placeholder="Author", required)
-        textarea(name="content", placeholder="Content", required)
+    h1 Create a New Blog Post
+
+    form(action="/blog/create" method="POST")
+        label(for="title") Title:
+        input(type="text" name="title" required)
+        br
+
+        label(for="content") Content:
+        textarea(name="content" required)
+        br
+
+        label(for="author") Author:
+        input(type="text" name="author" required)
+        br
+
         button(type="submit") Create

@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    h1 Comments for #{post.title}
+
+    ul
+        each comment in comments
+            li
+                p #{comment.author}: #{comment.content}
+                p Created At: #{comment.createdAt}
+                if comment.replies
+                    ul
+                        each reply in comment.replies
+                            li
+                                p #{reply.author}: #{reply.content}
+
+    h3 Add a Comment
+    form(action=`/comments/${post.id}` method="POST")
+        label(for="content") Comment:
+        textarea(name="content" required)
+        br
+
+        label(for="author") Your Name:
+        input(type="text" name="author" required)
+        br
+
+        button(type="submit") Submit

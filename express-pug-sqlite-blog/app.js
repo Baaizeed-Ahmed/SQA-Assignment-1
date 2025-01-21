@@ -2,10 +2,10 @@ const express = require('express');
 const path = require('path');
 const { sequelize } = require('./models');
 const blogRoutes = require('./routes/blog');
-const commentRoutes = require('./routes/comments');
+const Usercomments = require('./routes/comments');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -16,8 +16,9 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/blog', blogRoutes);
-app.use('/comments', commentRoutes);
+app.use('/', Usercomments);
+
+app.use('/', blogRoutes);
 
 sequelize.sync()
   .then(() => {

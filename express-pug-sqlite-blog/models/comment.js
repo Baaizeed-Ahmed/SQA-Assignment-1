@@ -12,20 +12,19 @@ module.exports = (sequelize) => {
             allowNull: false,
         },
         author: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
+            allowNull: false,
+        },
+        blogPostId: {
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         parentId: {
-            type: DataTypes.INTEGER, // Allows nested replies
+            type: DataTypes.INTEGER, // For nested replies
             allowNull: true,
             defaultValue: null,
         },
-        createdAt: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
-        },
     }, {
-        tableName: 'Comments',
-        timestamps: false,
+        timestamps: true, // Automatically adds `createdAt` and `updatedAt`
     });
 };

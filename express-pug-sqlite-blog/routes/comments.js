@@ -1,66 +1,53 @@
 const express = require('express');
-const { Comment } = require('../models');
+const { BlogPost, Comment } = require('../models');
 
 const router = express.Router();
 
-// Add a comment or reply
+// Display comments for a blog post
+router.get('/:blogPostId', async (req, res) => {
+    const { blogPostId } = req.params;
+    const post = await BlogPost.findByPk(blogPostId);
+    const comments = await Comment.findAll({ where: { blogPostId } });
+
+    // Build comment tree for nested replies
+    const buildCommentTree = (comments, parentId = null) => {
+        return comments
+            .filter(comment => comment.parentId === parentId)
+            .map(comment => ({
+                ...comment.toJSON(),
+                replies: buildCommentTree(comments, comment.id),
+            }));
+    };
+
+    const commentTree = buildCommentTree(comments);
+    res.render('comments', { title: `Comments for ${post.title}`, post, comments: commentTree });
+});
+
+// Add a new comment
 router.post('/:blogPostId', async (req, res) => {
     const { blogPostId } = req.params;
-    const { content, author, parentId } = req.body;
+    const { content, author } = req.body;
 
     try {
-        const comment = await Comment.create({ content, author, parentId, blogPostId });
-        res.json(comment);
+        await Comment.create({ content, author, blogPostId });
+        res.redirect(`/comments/${blogPostId}`);
     } catch (error) {
         console.error('Error adding comment:', error);
         res.status(500).send('Failed to add comment.');
     }
 });
 
-// Get comments for a blog post
-router.get('/:blogPostId', async (req, res) => {
-    const { blogPostId } = req.params;
+// Add a reply to a comment
+router.post('/:blogPostId/:parentId', async (req, res) => {
+    const { blogPostId, parentId } = req.params;
+    const { content, author } = req.body;
 
     try {
-        const comments = await Comment.findAll({ where: { blogPostId } });
-        res.json(comments);
+        await Comment.create({ content, author, blogPostId, parentId });
+        res.redirect(`/comments/${blogPostId}`);
     } catch (error) {
-        console.error('Error fetching comments:', error);
-        res.status(500).send('Failed to fetch comments.');
-    }
-});
-
-// Edit a comment
-router.put('/:id', async (req, res) => {
-    const { id } = req.params;
-    const { content } = req.body;
-
-    try {
-        const comment = await Comment.findByPk(id);
-        if (!comment) return res.status(404).send('Comment not found.');
-
-        comment.content = content;
-        await comment.save();
-
-        res.json(comment);
-    } catch (error) {
-        console.error('Error editing comment:', error);
-        res.status(500).send('Failed to edit comment.');
-    }
-});
-
-// Delete a comment
-router.delete('/:id', async (req, res) => {
-    const { id } = req.params;
-
-    try {
-        const rowsDeleted = await Comment.destroy({ where: { id } });
-        if (!rowsDeleted) return res.status(404).send('Comment not found.');
-
-        res.send('Comment deleted.');
-    } catch (error) {
-        console.error('Error deleting comment:', error);
-        res.status(500).send('Failed to delete comment.');
+        console.error('Error adding reply:', error);
+        res.status(500).send('Failed to add reply.');
     }
 });
 

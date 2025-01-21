@@ -1,7 +1,17 @@
 extends layout
 
 block content
-  ul
-  each post in posts
-    li
-      a(href=`/post/${post.id}`) #{post.title} by #{post.author} (#{post.createdAt ? post.createdAt.toLocaleDateString() : 'No Date'})
+    h1 Blog Posts
+    a(href="/blog/create") Create New Post
+
+    ul
+        each post in posts
+            li
+                h2 
+                    a(href=`/blog/${post.id}`) #{post.title} 
+                    |  by #{post.author}
+                p Created At: #{post.createdAt ? post.createdAt.toLocaleDateString() : 'No Date'}
+                p #{post.content}
+
+                // Link to comments for this post
+                a(href=`/comments/${post.id}`) View Comments
