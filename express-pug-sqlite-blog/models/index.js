@@ -15,9 +15,7 @@ const BlogPost = sequelize.define('BlogPost', {
     allowNull: false
   }
 }, {
-  timestamps: true,
-  createdAt: 'created_at',
-  updatedAt: false
+  timestamps: true
 });
 
 module.exports = { sequelize, BlogPost };
