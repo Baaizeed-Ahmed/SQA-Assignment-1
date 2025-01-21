@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1 Register
+  if message
+    p= message
+  form(method='POST', action='/register')
+    label(for='username') Username:
+    input(type='text', name='username' required)
+    label(for='password') Password:
+    input(type='password', name='password' required)
+    button(type='submit') Register
+    p
+      a(href='/login') Login

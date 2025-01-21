@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { BlogPost } = require('../models');
+const { BlogPost } = require('../models/index');
 const Sequelize = require('sequelize'); 
 
-router.get('/', async (req, res) => {
+router.get('/home', async (req, res) => {
   const { search, sortBy } = req.query;
 
   let where = {};
@@ -25,12 +25,13 @@ router.get('/', async (req, res) => {
 
   try {
     const posts = await BlogPost.findAll({ where, order });
-    res.render('index', { title: 'Blog Posts', posts, search, sortBy }); 
+    res.render('index', { title: 'Blog Posts', posts, search, sortBy }); // Pass all required variables
   } catch (error) {
     console.error('Error fetching posts:', error);
     res.status(500).send('An error occurred while fetching posts.'); 
   }
 });
+
 
 router.get('/create', (req, res) => {
   res.render('create', { title: 'Create Post' });
@@ -38,7 +39,7 @@ router.get('/create', (req, res) => {
 
 router.post('/create', async (req, res) => {
   try {
-    await BlogPost.create(req.body);
+    await BlogPost.create(blogPostData);
     res.redirect('/');
   } catch (error) {
     console.error('Error creating post:', error);
@@ -90,18 +91,26 @@ router.post('/edit/:id', async (req, res) => {
 });
 
 router.post('/delete/:id', async (req, res) => {
-  try {
-    const post = await BlogPost.findByPk(req.params.id);
-    if (post) {
-      await post.destroy();
-      res.redirect('/');
-    } else {
-      res.status(404).send('Post not found');
-    }
-  } catch (error) {
-    console.error('Error deleting post:', error);
-    res.status(500).send('An error occurred while deleting the post.');
+  const post = await BlogPost.findByPk(req.params.id);
+  if (post) {
+    await post.destroy();
+    res.redirect('/');
+  } else {
+    res.status(404).send('Post not found');
   }
+});
+
+router.get('/stats', async (req, res) => {
+  const posts = await BlogPost.findAll();
+  const lengths = posts.map(post => post.title.length + post.content.length);
+  const stats = {
+    average_length: lengths.reduce((a, b) => a + b, 0) / lengths.length,
+    median_length: lengths.sort((a, b) => a - b)[Math.floor(lengths.length / 2)],
+    max_length: Math.max(...lengths),
+    min_length: Math.min(...lengths),
+    total_length: lengths.reduce((a, b) => a + b, 0)
+  };
+  res.render('stats', { title: 'Post Statistics', ...stats });
 });
 
 module.exports = router;
