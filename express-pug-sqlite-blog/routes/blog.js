@@ -12,8 +12,18 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/create', async (req, res) => {
-  await BlogPost.create(req.body);
-  res.redirect('/');
+  try {
+    const blogPostData = {
+      ...req.body,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    await BlogPost.create(blogPostData);
+    res.redirect('/');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 router.get('/post/:id', async (req, res) => {

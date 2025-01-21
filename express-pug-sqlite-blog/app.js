@@ -11,12 +11,18 @@ app.set('view engine', 'pug');
 
 app.use(express.urlencoded({ extended: true }));
 
+app.use(express.json());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', blogRoutes);
 
-sequelize.sync().then(() => {
-  app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+sequelize.sync()
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Server is running on http://localhost:${port}`);
+    });
+  })
+  .catch(err => {
+    console.error('Failed to synchronize the database:', err);
   });
-});
