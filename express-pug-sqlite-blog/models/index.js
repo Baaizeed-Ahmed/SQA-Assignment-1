@@ -2,6 +2,10 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const BlogPost = sequelize.define('BlogPost', {
+  id:{    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement:true
+  },
   title: {
     type: DataTypes.STRING(100),
     allowNull: false
@@ -18,4 +22,4 @@ const BlogPost = sequelize.define('BlogPost', {
   timestamps: true
 });
 
-module.exports = { sequelize, BlogPost };
+module.exports = BlogPost;
