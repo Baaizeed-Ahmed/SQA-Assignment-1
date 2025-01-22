@@ -4,3 +4,5 @@ block content
     p.post-meta By #{post.author} (Posted on #{post.createdAt ? post.createdAt.toLocaleString() : 'No Date'})
     p.post-content= post.content
     a(href=`/edit/${post.id}`) Edit Post
+    li
+        a(href='/') Back to Home
