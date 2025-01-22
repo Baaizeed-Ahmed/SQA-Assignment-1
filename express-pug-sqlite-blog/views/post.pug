@@ -1,8 +1,35 @@
 extends layout
 
 block content
-    p.post-meta By #{post.author} (Posted on #{post.createdAt ? post.createdAt.toLocaleString() : 'No Date'})
+    h1= post.title
+    p.post-meta
+        | By #{post.author} (Posted on #{post.createdAt ? post.createdAt.toLocaleString() : 'No Date'})
     p.post-content= post.content
     a(href=`/edit/${post.id}`) Edit Post
+
+    hr
+    h2 Comments
+
+    //- Safely handle the comments array
+    if comments && comments.length
+        ul.comments
+            each comment in comments
+                li.comment
+                    if comment.parent_id
+                        blockquote
+                            small #{comment.user_name} replied:
+                            p= comment.content
+                    else
+                        strong #{comment.user_name}:
+                        p= comment.content
+    else
+        p No comments yet. Be the first to comment!
+
+    hr
+    h3 Add a Comment
+    form.add-comment-form(action=`/posts/${post.id}/comments`, method="POST")
+        input(type="text", name="user_name", placeholder="Your Name", required=true)
+        textarea(name="content", placeholder="Write your comment here...", required=true)
+        button(type="submit") Submit
     li
         a(href='/') Back to Home
