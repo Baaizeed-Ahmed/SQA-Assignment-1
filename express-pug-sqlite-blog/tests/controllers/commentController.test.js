@@ -1,7 +1,7 @@
 const { getComments, addComment, editComment, deleteComment } = require('../../controllers/commentController');
-const Comment = require('../models/comment');
+const Comment = require('../../models/comment');
 
-jest.mock('../models/comment');
+jest.mock('../../models/comment');
 
 const mockResponse = () => {
     const res = {};

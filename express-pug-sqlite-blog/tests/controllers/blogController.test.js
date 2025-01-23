@@ -1,9 +1,9 @@
 const { getBlogPosts, createBlogPost, getBlogPostById, updateBlogPost, deleteBlogPost, getBlogPostStats } = require('../../controllers/blogController');
-const BlogPost = require('../models/index');
-const Comment = require('../models/comment');
+const BlogPost = require('../../models/index');
+const Comment = require('../../models/comment');
 
-jest.mock('../models/index');
-jest.mock('../models/comment');
+jest.mock('../../models/index');
+jest.mock('../../models/comment');
 
 const mockResponse = () => {
     const res = {};
