@@ -1,8 +1,8 @@
 const { register, login } = require('../../controllers/userController');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const db = require('../../models/user');
 
-jest.mock('bcrypt');
+jest.mock('bcryptjs');
 jest.mock('../../models/user', () => ({
   run: jest.fn(),
   get: jest.fn(),
