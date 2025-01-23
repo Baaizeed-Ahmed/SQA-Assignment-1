@@ -24,7 +24,7 @@ jobs:
         node-version: '14'
 
     - name: Change directory to project
-      run: cd express-pug-sqlite-blog
+      run: cd ./express-pug-sqlite-blog
 
     - name: Install dependencies
       run: npm ci
