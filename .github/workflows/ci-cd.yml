@@ -23,12 +23,11 @@ jobs:
       with:
         node-version: '14'
 
-    - name: Navigate to project directory
-      working-directory: './express-pug-sqlite-blog'
-      run: pwd
-
-    - name: Install dependencies
-      run: npm ci
+    - name: Navigate and Install dependencies
+      run: |
+        cd express-pug-sqlite-blog
+        npm ci
+      working-directory: ./express-pug-sqlite-blog
 
     - name: Build project
       run: npm run build
