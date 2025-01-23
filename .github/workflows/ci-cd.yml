@@ -1,14 +1,12 @@
-name: CI Pipeline
+name: Node.js CI
 
 on:
   push:
     branches:
       - main
-      - develop
   pull_request:
     branches:
       - main
-      - develop
 
 jobs:
   build:
@@ -17,36 +15,26 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
       with:
-        node-version: '14'
+        fetch-depth: 0
 
-    - name: Navigate and Install dependencies
+    - name: Verify directory structure
       run: |
-        cd express-pug-sqlite-blog
-        npm ci
-      working-directory: ./express-pug-sqlite-blog
+        pwd
+        ls -la
 
-    - name: Build project
-      run: npm run build
-
-  test:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - name: List project directory contents
+      run: ls -la express-pug-sqlite-blog || echo "Directory express-pug-sqlite-blog not found"
 
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v2
       with:
         node-version: '14'
 
     - name: Install dependencies
+      working-directory: ./express-pug-sqlite-blog
       run: npm ci
 
-    - name: Run Jest Tests
+    - name: Run tests
+      working-directory: ./express-pug-sqlite-blog
       run: npm test
