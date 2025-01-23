@@ -1,16 +1,12 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const CommentModel = require('../../models/comment');
+const Comment = require('../../models/comment');
 
 describe('Comment Model', () => {
   let sequelize;
-  let Comment;
 
   beforeAll(async () => {
     sequelize = new Sequelize('sqlite::memory:', { logging: false });
-  });
 
-  beforeEach(async () => {
-    Comment = CommentModel(sequelize, DataTypes);
     await sequelize.sync({ force: true });
   });
 
@@ -42,3 +38,4 @@ describe('Comment Model', () => {
     }
   });
 });
+
