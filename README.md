@@ -6,132 +6,122 @@
 - **Baaizeed**: (full stack) User commenting and ReadMe/settup - 30%.
 - **Saleha**: (full stack) User Auth feature and testing - 40%.
 
-## Setup Instructions
-
 ### Prerequisites
 
-- Install [Node.js](https://nodejs.org/) (version 14 or higher recommended).
-- Ensure [SQLite3](https://www.sqlite.org/) is installed on your system.
-- Clone the repository from the version control platform.
-
-### Steps
-
-1. **Clone the Repository**:
+1. **Required Software**:
+   - Install [Node.js](https://nodejs.org/) (version 14 or higher recommended).
+   - Install [SQLite3](https://www.sqlite.org/).
+   
+2. **Clone the Repository**:
    ```bash
    git clone https://github.com/your-repo/blog-application.git
    cd blog-application
    ```
 
-2. **Install Dependencies**:
-   Install all necessary Node.js packages using npm:
+### Steps to Run
+
+1. **Install Dependencies**:
+   Install the required Node.js packages:
    ```bash
    npm install
    ```
 
-3. **Set Up Environment Variables**:
-   - Create a `.env` file in the root directory.
-   - Add the following variables and configure them as needed:
-     ```env
-     PORT=3000
-     SESSION_SECRET=your_secret_key
-     ```
+2. **Environment Setup**:
+   Create a `.env` file in the root directory with the following variables:
+   ```env
+   PORT=3000
+   SESSION_SECRET=your_secret_key
+   ```
 
-4. **Initialize the Database**:
-   - Run the application once to automatically initialize the SQLite database:
+3. **Initialize the Database**:
+   - Run the application to initialize the SQLite database:
      ```bash
      npm start
      ```
-   - Alternatively, use a SQLite client to ensure `database.sqlite` is correctly created in the project directory.
 
-5. **Run the Application**:
-   Start the application server:
+4. **Start the Application**:
+   Launch the server with:
    ```bash
    npm start
    ```
-   The application will be accessible at:
-   - `http://localhost:3000` (default port)
+   The application will run at `http://localhost:3000` by default.
 
-6. **Testing the Application**:
-   - **Manual Testing**: Navigate through the application and interact with features like user registration, blog creation, and commenting.
-   - **Automated Testing**: Run any available test scripts using:
-     ```bash
-     npm test
-     ```
+5. **Run Tests**:
+   To execute the test suite:
+   ```bash
+   npx test
+   ```
+   Check the generated test coverage report to ensure thorough testing.
 
 ### Troubleshooting
 
 - **Common Issues**:
-  - If the database does not initialize, check for write permissions in the project directory.
-  - Ensure Node.js and SQLite3 are properly installed and accessible in your PATH.
+  - Database not initializing: Ensure write permissions in the project directory.
+  - Missing dependencies: Re-run `npm install`.
 
 - **Logs**:
-  - The server logs all incoming requests and errors for debugging. Check the terminal for detailed information.
-
+  - Check the terminal output for server logs and error messages.
 For any additional assistance contact the development team.
-
 ## Features
 
 ### Core Features
-- **User Authentication**:
-  - Secure registration and login with session-based authentication.
-  - Password hashing using bcrypt.
 
-- **Blog Post Management**:
-  - Create, view, edit, and delete blog posts.
+1. **User Authentication**:
+   - Secure registration and login.
+   - Session-based authentication with bcrypt-hashed passwords.
 
-- **Commenting System**:
-  - Add, edit, delete, and reply to comments.
-  - Support for nested comment threads.
+2. **Blog Post Management**:
+   - Create, read, update, and delete blog posts.
+   - Sort and search blog posts by date, alphabetical order, or keywords.
 
-- **Search and Sort**:
-  - Search posts by title or author.
-  - Sort posts by newest, oldest, or alphabetical order.
+3. **Commenting System**:
+   - Add, edit, delete, and reply to comments.
+   - Supports nested comment threads.
+
+4. **Statistics Dashboard**:
+   - Displays average, median, max, and min blog post lengths.
 
 ### Advanced Features
-- **Statistics Dashboard**:
-  - View detailed statistics on post lengths (average, median, max, and min).
+
+- **Security Enhancements**:
+  - Password hashing with bcrypt.
+  - Input sanitization to prevent XSS and SQL injection.
+  - CSRF protection using middleware.
 
 - **Error Handling**:
-  - Comprehensive error pages (e.g., 500 Internal Server Error).
+  - User-friendly error messages and dedicated error pages.
 
 ## Challenges and Solutions
 
 1. **Nested Comments**:
-   - **Challenge**: Efficiently implementing parent-child relationships.
-   - **Solution**: Designed a database schema to handle nesting and used recursive logic in templates.
+   - **Challenge**: Managing parent-child relationships.
+   - **Solution**: Implemented a flexible database schema and recursive rendering logic in Pug templates.
 
 2. **Password Security**:
-   - **Challenge**: Validating and securing user passwords.
-   - **Solution**: Implemented regex validation and bcrypt hashing.
+   - **Challenge**: Ensuring robust password protection.
+   - **Solution**: Validated password strength with regex and used bcrypt for secure hashing.
 
-3. **Search and Sort Functionality**:
-   - **Challenge**: Building dynamic, performant queries.
-   - **Solution**: Used Sequelize ORM to construct flexible query conditions.
-
-4. **Database Optimization**:
-   - **Challenge**: Handling large datasets efficiently.
-   - **Solution**: Indexed key fields and minimized query overhead.
+3. **Testing and Coverage**:
+   - **Challenge**: Achieving comprehensive test coverage.
+   - **Solution**: Developed unit and integration tests covering happy paths and edge cases.
 
 ## Evidence for Marking Criteria
 
-### Functionality
+### Feature Implementation
 
-1. **Authentication**:
+1. **User Authentication**:
    - **Code**: [`userController.js`](./userController.js), [`ensureAuth.js`](./ensureAuth.js).
    - **Templates**: [`register.pug`](./register.pug), [`login.pug`](./login.pug).
-   - **Details**: Users can register, log in, and manage sessions securely.
 
 2. **Blog Management**:
    - **Code**: [`blogController.js`](./blogController.js), [`index.js`](./index.js).
    - **Templates**: [`create.pug`](./create.pug), [`edit.pug`](./edit.pug), [`post.pug`](./post.pug).
-   - **Details**: CRUD operations on blog posts.
 
 3. **Comments**:
    - **Code**: [`commentController.js`](./commentController.js), [`comment.js`](./comment.js).
    - **Templates**: [`post.pug`](./post.pug).
-   - **Details**: Comments can be added, edited, deleted, and replied to.
 
-### Usability
+   ### Usability
 
 1. **User Interface**:
    - **Templates**: [`index.pug`](./index.pug), [`layout.pug`](./layout.pug), [`500.pug`](./500.pug).
@@ -163,9 +153,55 @@ For any additional assistance contact the development team.
    - **Templates**: [`post.pug`](./post.pug).
    - **Details**: Supports hierarchical comments.
 
+### Testing
+
+1. **Test Coverage**:
+   - Achieved over 85% test coverage.
+   - **Tools**: Jest and Supertest for unit and integration tests.
+
+2. **Example Tests**:
+   - Unit tests for user authentication logic.
+   - Integration tests for end-to-end workflows (e.g., posting a comment).
+
+3. **Evidence**:
+   - Test files: [`tests/auth.test.js`](./tests/auth.test.js), [`tests/blog.test.js`](./tests/blog.test.js).
+   - Coverage reports included in `/coverage` folder.
+
+### Security Enhancements
+
+1. **Password Hashing**:
+   - Used bcrypt to securely hash passwords.
+   - **Code**: [`userController.js`](./userController.js).
+
+2. **Input Validation**:
+   - Validated and sanitized user inputs.
+   - **Code**: [`commentController.js`](./commentController.js).
+
+3. **CSRF Protection**:
+   - Implemented using middleware.
+
+### Code Quality and Refactoring
+
+1. **Modularization**:
+   - Refactored controllers and models for better separation of concerns.
+   - **Code**: [`blogController.js`](./blogController.js), [`commentController.js`](./commentController.js).
+
+2. **Documentation**:
+   - Added meaningful inline comments and consistent formatting.
+
+### CI/CD and Git Practices
+
+1. **GitHub Actions**:
+   - Configured CI/CD for automated testing and linting.
+   - **Files**: [`.github/workflows/main.yml`](./.github/workflows/main.yml).
+
+2. **Git Practices**:
+   - Used feature branches for development.
+   - Regular commits with descriptive messages.
+
 ## Additional Resources
 
 - **Demo Video**: [Insert Link]
 - **Screenshots**: [Insert Links]
 
-Thank you for evaluating our project. Feel free to reach out with any questions or feedback!
+Thank you for evaluating our project. Let us know if you have any questions or feedback!
