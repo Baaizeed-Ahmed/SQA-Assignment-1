@@ -1,21 +1,17 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const BlogPostModel = require('../../models/index');
+const BlogPost = require('../../models/index');
 
 describe('BlogPost Model', () => {
   let sequelize;
-  let BlogPost;
 
   beforeAll(async () => {
     sequelize = new Sequelize('sqlite::memory:', { logging: false });
-  });
 
-  beforeEach(async () => {
-    BlogPost = BlogPostModel(sequelize, DataTypes);
     await sequelize.sync({ force: true });
   });
 
   afterAll(async () => {
-    await sequelize.close();
+    await sequelize.close(); 
   });
 
   test('should create a BlogPost instance with valid attributes', async () => {
@@ -49,13 +45,13 @@ describe('BlogPost Model', () => {
       content: 'This is the content.',
       author: 'Author Name'
     });
-
+  
     const initialUpdatedAt = blogPost.updatedAt;
 
     await new Promise(r => setTimeout(r, 1000));
-
+  
     await blogPost.update({ title: 'Updated Title' });
 
-    expect(blogPost.updatedAt).toBeGreaterThan(initialUpdatedAt);
-  });
+    expect(blogPost.updatedAt.getTime()).toBeGreaterThan(initialUpdatedAt.getTime());
+  });  
 });
