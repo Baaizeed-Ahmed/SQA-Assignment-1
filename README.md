@@ -196,16 +196,21 @@ Comprehensive unit and integration tests developed, employing Jest to ensure hig
         - Utilising Jest, we generated test coverage reports to ensure comprehensive coverage across our application.
 
       Example Tests:
+     
      ![App Unit Test Error](src/images/app%20unit%20test%20error.png)
+     
      The provided screenshot displays test failures, which emphasizes writing tests before writing the implementation code. The first failure concerns a GET request expected to redirect based on session, but it results in a 500 error, suggesting an issue with session handling or  routing logic. The second failure occurs because a middleware function expected to be invoked isn't called, indicating potential errors in middleware registration within the request pipeline. The third test highlights a mismatch in expected and received responses from an error handler meant to catch exceptions and return a 500 status code, pointing to possible flaws in error-handling setup. To resolve these, developers should carefully review and adjust the session logic, middleware setup, and error-handling code, using TDD's "Red-Green-Refactor" cycle to iteratively test and refine the application.
 
    ![App Unit Test Pass](src/images/app%20unit%20test%20pass.png)
+   
    The updated screenshot showing passing tests indicates successful problem resolution using Test-Driven Development (TDD). Initially, tests failed due to issues with session-based redirection, middleware invocation, and error handling. By systematically applying TDD's iterative cycle of failing tests ("Red"), implementing minimal code changes to pass those tests ("Green"), and refining the functional codebase for efficiency and clarity ("Refactor"), we have addressed these challenges. Now, the GET request correctly handles session logic and redirects as expected, middleware functions execute in the correct order, and the error-handling middleware effectively catches exceptions, returning appropriate responses. This demonstrates a robust application design, aligned with the thorough correctness ensured by TDD practices.
 
    ![Comment Int Test Error](src/images/comment%20int%20test%20error.png)
+   
    The initial integration test failures for the Comment model highlight two main issues: a ReferenceError when trying to create a Comment instance with default values, and an unexpected error type during validation checks. The ReferenceError indicates that the Comment model was likely not correctly imported or configured within the test environment. Additionally, the test expected a SequelizeValidationError when required fields are null, but it encountered a ReferenceError instead, suggesting that the error-handling or model validation configuration may have been incomplete or misdirected.
 
    ![Comment Int Test Pass](src/images/comment%20int%20test%20pass.png)
+   
    By addressing these issues—ensuring the Comment model is properly defined and handling field validations correctly—it resulted with expected behaviors, ensuring tests pass and the model functions as intended. Implementing these corrections using TDD principles ensures a reliable and well-tested integration process.
 
    - Example Test files: [`tests/app.test.js`](./tests/app.test.js), [`tests/models/blog.test.js`](./tests/models/blog.test.js).
@@ -249,10 +254,13 @@ Effective use of GitHub for collaborative version control. GitHub Actions have b
    - Regular commits with descriptive messages.
 
 **Problems Initialising Pipeline**:
+
 ![Pipeline Fail](src/images/pipeline%20fail.png)
+
 The CI/CD pipeline failure depicted in the screenshot stems from an issue encountered during the "Install dependencies" step, where the process attempts to run npm ci. The error message "Cannot read property 'bcryptjs' of undefined" suggests a problem either with the package dependencies defined in the package.json or a mismatch with the npm environment configuration. This could be due to an incorrect or missing dependency version specification, or other issues within the dependency chain.
 
 ![Pipeline Pass](src/images/pipeline%20pass.png)
+
 The pipeline failure due to the inability to read the 'bcryptjs' property was effectively resolved by updating the Node.js version used in the CI/CD environment. Initially, efforts were concentrated on updating the bcryptjs package itself, suspecting version compatibility issues with its dependencies. However, after several attempts and still encountering installation errors, the decision was made to explore alternative solutions. Through a process of trial and error, it became apparent that the root issue was compatibility between the existing Node.js version and the bcryptjs package. Updating Node.js to a newer version aligned better with the package's requirements, leading to a successful resolution of the dependency installation issue.
 
 Thank you for evaluating our project. Let us know if you have any questions or feedback!
