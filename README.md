@@ -1,10 +1,13 @@
 # Blog Application
 
+## Project Overview
+This project involves the development of an Express-based blog application, focusing on posting and reading blog entries. The primary objective was to apply Software Quality Assurance (SQA) principles to enhance and refine the application, ensuring it is robust, secure, and thoroughly tested. This was achieved by expanding its features, reinforcing security measures, and implementing comprehensive testing protocols.
+
 ## Team Contributions
 
-- **Mohammad**: (full stack) sort and search feature and pipelines - 30%.
-- **Baaizeed**: (full stack) User commenting and ReadMe/settup - 30%.
-- **Saleha**: (full stack) User Auth feature and testing - 40%.
+- **Mohammad**: Responsible for implementing sort and search features, as well as setting up the CI/CD pipeline - 30%.
+- **Baaizeed**: Developed the commenting functionality and contributed to writing this README and setup instructions - 30%.
+- **Saleha**:  Focused on user authentication features, including testing and contributions to pipeline setup - 40%.
 
 ### Prerequisites
 
@@ -62,31 +65,32 @@
 - **Logs**:
   - Check the terminal output for server logs and error messages.
 For any additional assistance contact the development team.
-## Features
+
+## Implemented Features
 
 ### Core Features
 
 1. **User Authentication**:
-   - Secure registration and login.
-   - Session-based authentication with bcrypt-hashed passwords.
+   - Login and Registration functionality.
+   - Security measures including password hashing, session-based authentication, and user role management.
 
 2. **Blog Post Management**:
-   - Create, read, update, and delete blog posts.
-   - Sort and search blog posts by date, alphabetical order, or keywords.
+   - Capability to create, edit, and delete blog posts.
+   - Advanced search and sorting options for blog posts based on date, title, or keywords.
 
 3. **Commenting System**:
-   - Add, edit, delete, and reply to comments.
+   - Users can add, delete, and reply to comments on individual blog posts.
    - Supports nested comment threads.
 
 4. **Statistics Dashboard**:
-   - Displays average, median, max, and min blog post lengths.
+   - Displays various blog post statistics, such as average, median, max, and min post lengths.
 
 ### Advanced Features
 
 - **Security Enhancements**:
-  - Password hashing with bcrypt.
-  - Input sanitization to prevent XSS and SQL injection.
-  - CSRF protection using middleware.
+  - Password Hashing: Implemented using bcrypt for secure storage.
+  - Input Sanitization: Measures to prevent XSS and SQL injection attacks.
+  - CSRF Protection: Added via middleware integration.
 
 - **Error Handling**:
   - User-friendly error messages and dedicated error pages.
@@ -105,9 +109,19 @@ For any additional assistance contact the development team.
    - **Challenge**: Achieving comprehensive test coverage.
    - **Solution**: Developed unit and integration tests covering happy paths and edge cases.
 
+4. **Branch Management and Conflicts**:
+   - **Challenge**: Conflicts arose when updating branches with the main branch.
+   - **Solution**: Improved communication on push schedules and frequently committed and pulled updates to minimize conflicts. Received guidance from Josh which streamlined the conflict resolution process.
+
+5. **Pipeline Errors**:
+   - **Challenge**: Repeated errors in the CI/CD pipeline.
+   - **Solution**: Researched the error online, with a Stack Overflow solution providing the fix needed to stabilize the pipeline.
+
 ## Evidence for Marking Criteria
 
 ### Feature Implementation
+
+Thorough implementation of user authentication and blog management features, with robust CRUD operations and additional sorting and searching functionalities.
 
 1. **User Authentication**:
    - **Code**: [`userController.js`](./userController.js), [`ensureAuth.js`](./ensureAuth.js).
@@ -155,6 +169,8 @@ For any additional assistance contact the development team.
 
 ### Testing
 
+Comprehensive unit and integration tests developed, employing Jest to ensure high code coverage and reliability.
+
 1. **Test Coverage**:
    - Achieved over 85% test coverage.
    - **Tools**: Jest and Supertest for unit and integration tests.
@@ -164,10 +180,32 @@ For any additional assistance contact the development team.
    - Integration tests for end-to-end workflows (e.g., posting a comment).
 
 3. **Evidence**:
-   - Test files: [`tests/auth.test.js`](./tests/auth.test.js), [`tests/blog.test.js`](./tests/blog.test.js).
-   - Coverage reports included in `/coverage` folder.
+   - Test-Driven Development (TDD) Approach:
+   In developing our blog application, we employed a Test-Driven Development (TDD) strategy to ensure a robust and reliable codebase. Our approach involved the following steps:
+      1. Defining Test Cases Before Development:
+        - Prior to writing any functional code, we outlined specific test cases to validate the expected behavior of our features. This included scenarios for both successful operations and edge cases.
+
+      2. Unit and Integration Tests:
+        - We created unit tests for our core components, focusing on models and utility functions.
+        - Integration tests were designed to simulate end-to-end workflows, covering user interactions such as login, registration, blog creation, and commenting.
+
+      3. Continuous Testing:
+        - Tests were run continuously during the development phase, with code only being written to pass pre-defined tests, ensuring that each feature met its requirements before moving forward.
+
+      4. Test Coverage Reports:
+        - Utilizing tools like Jest (or another relevant tool), we generated test coverage reports to ensure comprehensive coverage across our application.
+
+      Example Tests:
+     
+      For example, tests were written to cover scenarios like blog post creation, with assertions checking for successful data handling and storage.
+      This rigorous application of TDD helped in identifying issues early in the development cycle and ensured that any changes in the codebase were non-breaking.
+
+
+   - Test files: [`tests/app.test.js`](./tests/app.test.js), [`tests/models/blog.test.js`](./tests/models/blog.test.js).
 
 ### Security Enhancements
+
+Consistently applied security measures across the application, including bcrypt for passwords, CSRF protection, and input sanitization.
 
 1. **Password Hashing**:
    - Used bcrypt to securely hash passwords.
@@ -182,6 +220,8 @@ For any additional assistance contact the development team.
 
 ### Code Quality and Refactoring
 
+The codebase has been refactored for modularity and maintainability, adhering to coding standards with meaningful documentation throughout the project.
+
 1. **Modularization**:
    - Refactored controllers and models for better separation of concerns.
    - **Code**: [`blogController.js`](./blogController.js), [`commentController.js`](./commentController.js).
@@ -191,6 +231,8 @@ For any additional assistance contact the development team.
 
 ### CI/CD and Git Practices
 
+Effective use of GitHub for collaborative version control. GitHub Actions have been configured to automate testing and code quality checks, with a structured branching strategy and regular, meaningful commits.
+
 1. **GitHub Actions**:
    - Configured CI/CD for automated testing and linting.
    - **Files**: [`.github/workflows/main.yml`](./.github/workflows/main.yml).
@@ -198,10 +240,5 @@ For any additional assistance contact the development team.
 2. **Git Practices**:
    - Used feature branches for development.
    - Regular commits with descriptive messages.
-
-## Additional Resources
-
-- **Demo Video**: [Insert Link]
-- **Screenshots**: [Insert Links]
 
 Thank you for evaluating our project. Let us know if you have any questions or feedback!
