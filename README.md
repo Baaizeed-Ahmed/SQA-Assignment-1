@@ -73,14 +73,18 @@ For any additional assistance contact the development team.
 1. **User Authentication**:
    - Login and Registration functionality.
    - Security measures including password hashing, session-based authentication, and user role management.
+   - [Watch Video](src/LoginRegister%20Feature.mp4)
 
 2. **Blog Post Management**:
    - Capability to create, edit, and delete blog posts.
    - Advanced search and sorting options for blog posts based on date, title, or keywords.
+   - [Watch Video](src/Create%20Post.mp4)
+   - [Watch Video](src/Search%20Feature.mp4)
 
 3. **Commenting System**:
    - Users can add, delete, and reply to comments on individual blog posts.
    - Supports nested comment threads.
+   - [Watch Video](src/Comment%20Feature.mp4)
 
 4. **Statistics Dashboard**:
    - Displays various blog post statistics, such as average, median, max, and min post lengths.
