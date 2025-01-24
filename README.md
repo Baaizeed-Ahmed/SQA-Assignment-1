@@ -254,6 +254,14 @@ Effective use of GitHub for collaborative version control. GitHub Actions have b
    - Used feature branches for development.
    - Regular commits with descriptive messages.
 
+   ![Pr Request](src/images/Screenshot%202025-01-24%20110349.png)
+
+   In our project, we adhered to effective collaboration practices through the use of pull requests (PRs) and diligent commenting. Each PR was initiated to propose significant changes or feature additions, ensuring that the code alterations were visible and could be independently reviewed. We actively engaged in discussions within the PRs, enabling team members to provide constructive feedback and suggestions, enhancing the quality of our codebase. Reviewers promptly pointed out concerns, such as redundant blog posts, which were then swiftly addressed by the author demonstrating our commitment to maintaining a clean and functional application. Additionally, reviews were requested from peers, facilitating collective code ownership and knowledge sharing. This rigorous review process not only contributed to high code quality but also allowed us to merge changes confidently, following proper procedures and workflows.
+
+   ![Branches](src/images/branches.png)
+
+   In our project, we utilized a systematic approach to branching that included feature, test, and fix branches, ensuring a streamlined and organized development process. Feature branches were dedicated to developing new functionalities like authentication and commenting, allowing these developments to proceed smoothly without impacting the stable main branch. Test branches were used to rigorously validate each aspect of the application with unit and integration tests, isolating testing processes to ensure accuracy and thoroughness. Fix branches allowed us to address any identified issues promptly, focusing on resolving bugs and refining features before merging them into the main codebase. This structured branching strategy facilitated effective collaboration, reduced conflicts, and maintained the integrity and quality of the project's code throughout the development lifecycle.
+
 **Problems Initialising Pipeline**:
 
 ![Pipeline Fail](src/images/pipeline%20fail.png)
