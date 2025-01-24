@@ -82,12 +82,9 @@ For any additional assistance contact the development team.
    - [Watch Video](src/videos/Search%20Feature.mp4)
 
 3. **Commenting System**:
-   - Users can add, delete, and reply to comments on individual blog posts.
+   - Users can add and reply to comments on individual blog posts.
    - Supports nested comment threads.
    - [Watch Video](src/videos/Comment%20Feature.mp4)
-
-4. **Statistics Dashboard**:
-   - Displays various blog post statistics, such as average, median, max, and min post lengths.
 
 ### Advanced Features
 
